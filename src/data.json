@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "co2GoalPerMealKg": 0.75,
+    "recyclingGoalPct": 65
+  },
+  "stalls": [
+    {
+      "id": "green-taco",
+      "name": "Green Taco",
+      "coords": [55.6186, 12.0779],
+      "foodType": "Vegansk",
+      "organicPct": 90,
+      "localPct": 60,
+      "wasteFractions": ["bio","plast","papir","metal"],
+      "co2PerMealKg": 0.48,
+      "foodWastePct": 7,
+      "donatesSurplus": true,
+      "energy": "Biogas",
+      "likes": 0
+    },
+    {
+      "id": "solar-burger",
+      "name": "Solar Burger",
+      "coords": [55.6169, 12.0812],
+      "foodType": "Vegetarisk",
+      "organicPct": 85,
+      "localPct": 55,
+      "wasteFractions": ["bio","papir","metal"],
+      "co2PerMealKg": 0.62,
+      "foodWastePct": 10,
+      "donatesSurplus": false,
+      "energy": "Sol",
+      "likes": 0
+    },
+    {
+      "id": "copenhagen-bowl",
+      "name": "Copenhagen Bowl",
+      "coords": [55.6179, 12.0745],
+      "foodType": "Pescetar",
+      "organicPct": 70,
+      "localPct": 65,
+      "wasteFractions": ["bio","plast","papir"],
+      "co2PerMealKg": 0.71,
+      "foodWastePct": 5,
+      "donatesSurplus": true,
+      "energy": "El fra biogas",
+      "likes": 0
+    }
+  ]
+}
