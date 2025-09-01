@@ -7,8 +7,10 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="styles.css">
   <style>#map{height:100vh}</style>
+  <p id="demo"> </p>
 </head>
 <body>
+  
   <!-- Dashboard (flydende panel) -->
   <div id="dash" class="dash hidden"></div>
 
@@ -33,23 +35,58 @@
   <button id="reportTrash">Markér skrald</button>
 </div>
 
-<!-- Små knapper: Heatmap toggle + Markér skrald -->
-<div class="map-ctrl">
-  <button id="toggleHeat">Heatmap: Off</button>
-  <button id="reportTrash">Markér skrald</button>
-</div>
+
 
 <!-- Rolle (fake login til dev) -->
 <div class="role-ctrl">
   <label for="roleSel">Rolle:</label>
   <select id="roleSel">
-    <option value="guest">Gæst</option>
     <option value="volunteer">Frivillig</option>
-    <option value="organizer">Arrangør</option>
   </select>
 </div>
 
+<div class="navbar">
+    <a href="#report" class="active">report</a>
+    <a href="#heatmap">Heatmap</a>
+    <a href="#profile">Profile</a>
+    <a href="#settings">Settings</a>
+    <button onclick="getLocation()">Report</button>
+    
+</div>
 
   <script src="src/app.js"></script>
+<script>
+const x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function success(position) 
+{
+   alert(x.innerHTML = "You have successfully reported theres a significant margain of garbage near you" 
+  +"Latitude: " + position.coords.latitude + 
+  "Longitude: " + position.coords.longitude);
+}
+
+function error() {
+  alert("Sorry, no position available.");
+}
+</script>
+
+
+
+
+
 </body>
+
+
 </html>
+
+
+
+
