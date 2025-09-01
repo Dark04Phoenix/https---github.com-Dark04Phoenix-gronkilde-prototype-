@@ -24,31 +24,23 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Heatmap plugin til Leaflet -->
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 
-<!-- Små knapper: Heatmap toggle + Markér skrald -->
-<div class="map-ctrl">
-  <button id="toggleHeat">Heatmap: Off</button>
-  <button id="reportTrash">Markér skrald</button>
-</div>
+  <!-- Små knapper: Heatmap toggle + Markér skrald (kun én blok) -->
+  <div class="map-ctrl">
+    <button id="toggleHeat">Heatmap: Off</button>
+    <button id="reportTrash">Markér skrald</button>
+  </div>
 
-<!-- Små knapper: Heatmap toggle + Markér skrald -->
-<div class="map-ctrl">
-  <button id="toggleHeat">Heatmap: Off</button>
-  <button id="reportTrash">Markér skrald</button>
-</div>
-
-<!-- Rolle (fake login til dev) -->
-<div class="role-ctrl">
-  <label for="roleSel">Rolle:</label>
-  <select id="roleSel">
-    <option value="guest">Gæst</option>
-    <option value="volunteer">Frivillig</option>
-    <option value="organizer">Arrangør</option>
-  </select>
-</div>
-
+  <!-- Rolle (fake login til dev) -->
+  <div class="role-ctrl">
+    <label for="roleSel">Rolle:</label>
+    <select id="roleSel">
+      <option value="guest">Gæst</option>
+      <option value="volunteer">Frivillig</option>
+      <option value="organizer">Arrangør</option>
+    </select>
+  </div>
 
   <script src="src/app.js"></script>
 </body>
