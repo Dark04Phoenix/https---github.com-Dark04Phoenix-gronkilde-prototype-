@@ -95,19 +95,6 @@ document.getElementById('toggleHeat')?.addEventListener('click', (e)=>{
   renderHeat();
 });
 
-// Markér skrald (arm næste klik) + UX (cursor/ESC)
-document.getElementById('reportTrash')?.addEventListener('click', ()=>{
-  armingReport = true;
-  document.body.style.cursor = 'crosshair';
-  // let op – undgå alert() for ikke at blokere input; UI er nok via cursor
-});
-window.addEventListener('keydown', (e)=>{
-  if (e.key === 'Escape' && armingReport) {
-    armingReport = false;
-    document.body.style.cursor = 'default';
-  }
-});
-
 // Klik på kortet = opret lokal rapport + "fortryd" i få sekunder
 map.on('click', (ev)=>{
   if (!armingReport) return;
@@ -291,3 +278,4 @@ function computeTotals(){
   const underGoal = d.stalls.filter(s => s.co2PerMealKg <= d.meta.co2GoalPerMealKg).length;
   return { avgCo2, avgOrganic, goal: d.meta.co2GoalPerMealKg, count, underGoal };
 }
+

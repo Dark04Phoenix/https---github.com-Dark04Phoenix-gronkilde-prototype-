@@ -58,7 +58,7 @@ body {
 .dash {
   position: fixed;
   left: 90px;
-  top: 90px;
+  top: px;
   background: rgba(23,23,26,.92);
   backdrop-filter: blur(6px);
   border-radius: 14px;

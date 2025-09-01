@@ -31,12 +31,9 @@
 <!-- Små knapper: Heatmap toggle + Markér skrald -->
 <div class="map-ctrl">
   <button id="toggleHeat">Heatmap: Off</button>
-  <button id="reportTrash">Markér skrald</button>
 </div>
 
 
-
-<!-- Rolle (fake login til dev) -->
 <div class="role-ctrl">
   <label for="roleSel">Rolle:</label>
   <select id="roleSel">
@@ -68,8 +65,8 @@ function getLocation() {
 function success(position) 
 {
    alert(x.innerHTML = "You have successfully reported theres a significant margain of garbage near you" 
-  +"Latitude: " + position.coords.latitude + 
-  "Longitude: " + position.coords.longitude);
+  +"\nLatitude:   " + position.coords.latitude +
+  "\nLongitude: " + position.coords.longitude);
 }
 
 function error() {
