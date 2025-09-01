@@ -40,3 +40,21 @@ body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple
 /* Sikrer at .hidden altid vinder over .modal */
 .modal.hidden { display: none !important; }
 
+.map-ctrl{position:fixed;right:16px;top:16px;z-index:950;display:flex;gap:8px}
+.map-ctrl button{background:#1f1f23;border:1px solid #2a2a2f;color:#eee;border-radius:10px;padding:8px 12px;cursor:pointer}
+@media (max-width:480px){ .map-ctrl{right:10px;top:10px} .map-ctrl button{padding:10px 12px} }
+.role-ctrl{
+  position:fixed; right:16px; top:60px; z-index:950;
+  background:#1f1f23; border:1px solid #2a2a2f; color:#eee;
+  border-radius:10px; padding:6px 10px; display:flex; gap:8px; align-items:center;
+}
+.role-ctrl select{ background:#1f1f23; color:#eee; border:1px solid #2a2a2f; border-radius:8px; padding:4px 6px; }
+@media (max-width:480px){ .role-ctrl{ right:10px; top:56px; } }
+
+.map-ctrl button.ghost{
+  background:#1a1a1d;
+  border:1px dashed #2a2a2f;
+}
+
+
+
