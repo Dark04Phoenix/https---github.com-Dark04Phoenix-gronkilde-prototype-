@@ -11,6 +11,45 @@ const LS_REPORTS     = 'gronkilde_reports';
 const LS_DEVICE      = 'gronkilde_device';
 const LS_LIKES       = 'gronkilde_likes';
 
+// ---- Roller (persist via localStorage) ----
+const LS_ROLE = 'gronkilde_role'; // 'guest' | 'volunteer' | 'organizer'
+
+function getRole(){
+  return localStorage.getItem(LS_ROLE) || 'volunteer'; // default
+}
+function setRole(role){
+  localStorage.setItem(LS_ROLE, role);
+  applyRoleUI();
+}
+
+// Vis/skjul knapper ud fra rolle
+function applyRoleUI(){
+  const role = getRole();
+  const btnHeat  = document.getElementById('toggleHeat');
+  const btnTrash = document.getElementById('reportTrash');
+
+  // standard: synligt
+  if (btnHeat)  btnHeat.style.display  = '';
+  if (btnTrash) btnTrash.style.display = '';
+
+  if (role === 'guest'){
+    // gæst: skjul heatmap-toggle, men må markere skrald
+    if (btnHeat) btnHeat.style.display = 'none';
+  } else if (role === 'organizer'){
+    // arrangør: må tænde/slukke heatmap, men ikke markere skrald
+    if (btnTrash) btnTrash.style.display = 'none';
+  }
+
+  // sæt dropdownens værdi, hvis den findes
+  const sel = document.getElementById('roleSel');
+  if (sel && sel.value !== role) sel.value = role;
+}
+
+// Wire dropdown
+document.getElementById('roleSel')?.addEventListener('change', (e)=>{
+  setRole(e.target.value);
+});
+
 let heatLayer   = null;
 let heatOn      = false;
 let armingReport = false;   // aktiveres af "Markér skrald"-knap
@@ -149,6 +188,8 @@ document.getElementById('reportTrash')?.addEventListener('click', () => {
   armingReport = true;
   document.body.style.cursor = 'crosshair';
 });
+
+applyRoleUI(); // <- Kald dette én gang ved load
 
 // ESC annullerer arming-mode
 window.addEventListener('keydown', (e) => {
