@@ -10,45 +10,44 @@ const LS_LIKES       = 'gronkilde_likes';
 const LS_ROLE = 'gronkilde_role'; // 'guest' | 'volunteer' | 'organizer'
 
 function getRole(){
-  return localStorage.getItem(LS_ROLE) || 'volunteer'; // default
+  return localStorage.getItem(LS_ROLE) || 'guest'; // default
 }
 function setRole(role){
   localStorage.setItem(LS_ROLE, role);
   applyRoleUI();
 }
 
-// Vis/skjul UI efter rolle
+// Vis /skjul UI baseret på rolle
 function applyRoleUI(){
   const role     = getRole();
   const btnHeat  = document.getElementById('toggleHeat');
   const btnTrash = document.getElementById('reportTrash');
   const dashEl   = document.getElementById('dash');
+  const exportBtn = document.getElementById('exportReports');  // <- NY
 
-  // tilladelser pr. rolle
-  const canSeeHeat = (role === 'volunteer');   // kun frivillig
-  const canReport  = (role !== 'organizer');   // alle undtagen arrangør
-  const canSeeDash = (role === 'organizer');   // kun arrangør
+  const canSeeHeat = (role === 'volunteer');
+  const canReport  = (role !== 'organizer');
+  const canSeeDash = (role === 'organizer');
 
-  // reset
   if (btnHeat)  btnHeat.style.display  = '';
   if (btnTrash) btnTrash.style.display = '';
+  if (exportBtn) exportBtn.style.display = '';                 // <- NY reset
 
-  // Heatmap-toggle + tving OFF hvis ikke tilladt
   if (!canSeeHeat) {
     if (btnHeat) btnHeat.style.display = 'none';
     if (heatOn) { heatOn = false; renderHeat(); }
   }
-
-  // Markér skrald
   if (!canReport && btnTrash) btnTrash.style.display = 'none';
 
-  // Dashboard synlighed
+  // Skjul eksport-knap for ikke-arrangører
+  if (exportBtn) exportBtn.style.display = (role === 'organizer') ? '' : 'none'; // <- NY
+
   if (dashEl) dashEl.classList.toggle('hidden', !canSeeDash);
 
-  // sync dropdown
   const sel = document.getElementById('roleSel');
   if (sel && sel.value !== role) sel.value = role;
 }
+
 
 // Wire dropdown
 document.getElementById('roleSel')?.addEventListener('change', (e)=>{
