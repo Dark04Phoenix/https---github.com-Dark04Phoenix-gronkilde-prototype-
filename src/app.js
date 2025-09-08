@@ -1,10 +1,5 @@
-// =========================================================
-// Cirkulær Madbod – Frontend (MVP)
-// =========================================================
+// ---- Frontenden til Cirkulær Madbod
 
-// ----------------------
-// Konstanter / UI state
-// ----------------------
 const MAP_CENTER     = [55.6173, 12.0784];
 const HEAT_WINDOW_MS = 24 * 60 * 60 * 1000;      // seneste 24 timer
 const LS_REPORTS     = 'gronkilde_reports';
@@ -22,25 +17,35 @@ function setRole(role){
   applyRoleUI();
 }
 
-// Vis/skjul knapper ud fra rolle
+// Vis/skjul UI efter rolle
 function applyRoleUI(){
-  const role = getRole();
+  const role     = getRole();
   const btnHeat  = document.getElementById('toggleHeat');
   const btnTrash = document.getElementById('reportTrash');
+  const dashEl   = document.getElementById('dash');
 
-  // standard: synligt
+  // tilladelser pr. rolle
+  const canSeeHeat = (role === 'volunteer');   // kun frivillig
+  const canReport  = (role !== 'organizer');   // alle undtagen arrangør
+  const canSeeDash = (role === 'organizer');   // kun arrangør
+
+  // reset
   if (btnHeat)  btnHeat.style.display  = '';
   if (btnTrash) btnTrash.style.display = '';
 
-  if (role === 'guest'){
-    // gæst: skjul heatmap-toggle, men må markere skrald
+  // Heatmap-toggle + tving OFF hvis ikke tilladt
+  if (!canSeeHeat) {
     if (btnHeat) btnHeat.style.display = 'none';
-  } else if (role === 'organizer'){
-    // arrangør: må tænde/slukke heatmap, men ikke markere skrald
-    if (btnTrash) btnTrash.style.display = 'none';
+    if (heatOn) { heatOn = false; renderHeat(); }
   }
 
-  // sæt dropdownens værdi, hvis den findes
+  // Markér skrald
+  if (!canReport && btnTrash) btnTrash.style.display = 'none';
+
+  // Dashboard synlighed
+  if (dashEl) dashEl.classList.toggle('hidden', !canSeeDash);
+
+  // sync dropdown
   const sel = document.getElementById('roleSel');
   if (sel && sel.value !== role) sel.value = role;
 }
@@ -48,12 +53,14 @@ function applyRoleUI(){
 // Wire dropdown
 document.getElementById('roleSel')?.addEventListener('change', (e)=>{
   setRole(e.target.value);
+  renderHeat();
+  if (__DATA) renderDash(computeTotals());
 });
 
-let heatLayer   = null;
-let heatOn      = false;
+let heatLayer    = null;
+let heatOn       = false;
 let armingReport = false;   // aktiveres af "Markér skrald"-knap
-let undoTimer   = null;
+let undoTimer    = null;
 let lastReportId = null;
 
 let __DATA = null;
@@ -189,7 +196,8 @@ document.getElementById('reportTrash')?.addEventListener('click', () => {
   document.body.style.cursor = 'crosshair';
 });
 
-applyRoleUI(); // <- Kald dette én gang ved load
+// Anvend rolle-UI ved load
+applyRoleUI();
 
 // ESC annullerer arming-mode
 window.addEventListener('keydown', (e) => {
@@ -390,5 +398,6 @@ function renderDash(t) {
       <div class="pill">Rapporter: <b>${getReportCount()}</b></div>
     </div>
   `;
-  dash.classList.remove('hidden');
+  // vis kun for arrangør
+  dash.classList.toggle('hidden', getRole() !== 'organizer');
 }
